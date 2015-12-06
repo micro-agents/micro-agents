@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<configuration>
+
+	<a name="Micro Platform" type="Configuration">
+		<configuration>
+			<a name="PLATFORM_NAME" type="string">OtagoMicroPlatform</a>
+			
+			<!-- Options for INTERNAL_MESSAGE_TRANSPORT: JETLANG, MICRO_FIBER -->
+			<a name="INTERNAL_MESSAGE_TRANSPORT" type="string">JETLANG</a>
+			
+			<!-- Activation of synchronous message passing mode (useful for simulations). 
+				This will override any selected message passing framework -->
+			<a name="SYNCHRONOUS_EXECUTION_MODE" type="boolean">false</a>
+			
+			<!-- MicroFiber configuration (number of scheduler and worker threads) -->
+			<a name="NUMBER_OF_SCHEDULERS" type="string">1</a>
+			<!-- The number of worker threads defaults to number of CPU cores if not specified -->
+			<!--<a name="NUMBER_OF_WORKERS" type="string">4</a>-->
+			
+			<!-- specifies if Clojure agent/role implementations are allowed -->
+			<a name="CLOJURE_SUPPORT" type="boolean">false</a>
+			
+			<!-- specifies output level of platform (0: only platform output and errors, 
+				1: agent initialization info, 2: warnings) -->
+			<a name="PLATFORM_OUTPUT_LEVEL" type="string">1</a>
+			<!-- specifies time prefix for platform output as String (NO_TIME: no time prefix, 
+			    TIME: simple time prefix based on 24 hour format, DATE_TIME: 24 hour format plus date, 
+				NANO_TIME: nanotime output) -->
+			<a name="PREFIX_PLATFORM_OUTPUT_WITH_TIME" type="string">TIME</a>
+			<!-- specifies output level for agent/role output (0: no output, 
+				1: only errors (produced by printError()), 
+				2: all output (from print() and printError()) -->
+			<a name="AGENT_CONSOLE_OUTPUT_LEVEL" type="string">2</a>
+			<!-- indicates if each line of multiline agent console output should be 
+				prefixed with agent name -->
+			<a name="PREFIX_MULTILINE_AGENT_OUTPUT" type="boolean">false</a>
+			<!-- indicates if agent console output should be 
+				prefixed with message type information (e.g. INFO, ERROR) -->
+			<a name="PREFIX_AGENT_OUTPUT_WITH_MESSAGE_TYPE" type="boolean">false</a>
+			<!-- indicates if agent console output should be 
+				prefixed with current nanotime information -->
+			<a name="PREFIX_AGENT_OUTPUT_WITH_NANOTIME" type="boolean">false</a>
+			<!-- specifies fixed seed for random number generator. Otherwise current system time is used. -->
+			<!-- <a name="RANDOM_NUMBER_GENERATOR_SEED" type="string">2134561684351686L</a> -->
+			
+			<!-- Network setup -->
+			<!-- indicates if network support is activated -->
+			<a name="DISTRIBUTED_MODE" type="boolean">false</a>
+			<a name="NETTY_MICRO_PORT" type="string">7938</a>
+			<!-- indicates if different network port should be automatically selected 
+				 if specified one is occupied -->
+			<a name="DYNAMIC_PORT_SELECTION" type="boolean">true</a>
+			<!-- Options for NETWORK_SERIALIZATION: JAVA, JAVA_COMPATIBILITY, XML, JSON -->
+			<a name="NETWORK_SERIALIZATION" type="string">XML</a>
+			<!-- Network discovery setup (only relevant if in distributed mode) -->
+			<a name="ACTIVATE_DISCOVERY" type="boolean">true</a>
+			<a name="START_DISCOVERY" type="boolean">true</a>
+			<a name="DISCOVERY_MODE" type="string">MULTICAST</a>
+			<a name="DISCOVERY_MULTICAST_ADDRESS" type="string">225.0.0.1</a>
+			<a name="DISCOVERY_MULTICAST_PORT" type="string">4444</a>
+			<a name="DISCOVERY_BROADCAST_PORT" type="string">5555</a>
+			<!-- Discovery frequency in seconds -->
+			<a name="DISCOVERY_FREQUENCY" type="string">20</a>
+			<!-- Heartbeat setup (only relevant if in distributed mode) -->
+			<a name="START_HEARTBEAT" type="boolean">true</a>
+			<a name="HEARTBEAT_FREQUENCY" type="string">10</a>
+			<!-- indicates when to consider another platform disconnected 
+				(HEARTBEAT_FREQUENCY * HEARTBEAT_TIMEOUT_FACTOR) -->
+			<a name="HEARTBEAT_TIMEOUT_FACTOR" type="string">4</a>
+			
+			<!-- Indicates of platform components are started lazy -->
+			<a name="START_LAZY" type="boolean">true</a>
+			<!-- Definition of message validator (but not activated here) -->
+			<a name="MICROMESSAGE_VALIDATOR" type="string">org.nzdis.micro.msgvalidator.DefaultMicroMessageValidator</a>
+		</configuration>
+	</a>
+
+</configuration>
