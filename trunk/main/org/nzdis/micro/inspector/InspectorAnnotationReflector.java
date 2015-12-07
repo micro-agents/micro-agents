@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 import org.nzdis.micro.Role;
 import org.nzdis.micro.inspector.annotations.CollectiveView;
 import org.nzdis.micro.inspector.annotations.Inspect;
-import org.sofosim.environment.stats.DataStructurePrettyPrinter;
+import org.nzdis.micro.util.DataStructurePrettyPrinter;
 
 /**
  * This class provides the actual inspection services of the PlatformInspector.
