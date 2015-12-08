@@ -62,8 +62,9 @@ public abstract class DefaultCljSocialRole extends DefaultSocialRole {
 	@Override
 	protected void release(){
 		releaseClj();
-		((AbstractAgent)getAgent()).getCljConnector().execInClojure(new StringBuffer("(in-ns (remove-ns))"));
-		//(remove-ns 'user.Individual117ns)
+		((AbstractAgent)getAgent()).getCljConnector().execInClojure(
+		new StringBuffer("(remove-ns '")
+			.append(((AbstractAgent)getAgent()).getCljConnector().getAgentNamespace()).append(")"));
 	}
 	
 	/**
