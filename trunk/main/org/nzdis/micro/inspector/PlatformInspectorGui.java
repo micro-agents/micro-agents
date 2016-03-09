@@ -1270,10 +1270,6 @@ public class PlatformInspectorGui extends javax.swing.JFrame {
 				}
 			}
 			
-			public boolean isCollection(Object object){
-				return object instanceof Collection<?>;
-			}
-			
 			int previousLength = 0;
 			
 			private StringBuffer calcStringPrefix(){

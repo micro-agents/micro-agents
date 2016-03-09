@@ -711,7 +711,20 @@ public class MTConnector extends MTRuntime {
 	 * @return List of randomly chosen agents; returns empty list if too little agents available in candidate list for picking.
 	 */
 	public static List<String> getRandomAgentsFromList(int numberOfTargets, ArrayList<String> inclusionList){
-		return getRandomAgentsFromList(numberOfTargets, inclusionList, false);
+		return getRandomAgentsFromList(numberOfTargets, inclusionList, null, false);
+	}
+	
+	/**
+	 * Returns randomly picked agents from list of given agents. Checks for agents' registration prior to 
+	 * picking.
+	 * Returns exactly the requested number of agents (numberOfTargets) or none.
+	 * @param numberOfTargets Number of targets to be picked
+	 * @param inclusionList List from which agents are to be picked
+	 * @param exclusionList List of agents (in inclusionList) that should not be picked. Ignored if null.
+	 * @return List of randomly chosen agents; returns empty list if too little agents available in candidate list for picking.
+	 */
+	public static List<String> getRandomAgentsFromList(int numberOfTargets, ArrayList<String> inclusionList, ArrayList<String> exclusionList){
+		return getRandomAgentsFromList(numberOfTargets, inclusionList, exclusionList, false);
 	}
 	
 	/**
@@ -719,11 +732,12 @@ public class MTConnector extends MTRuntime {
 	 * picking.
 	 * @param numberOfTargets Number of targets to be picked
 	 * @param inclusionList List from which agents are to be picked
+	 * @param exclusionList List of agents (in inclusionList) that should not be picked. Ignored if null.
 	 * @param allowLessTargets Indicates if returning less than requested number of agents is permissible. If not, it returns
 	 * 	empty list if insufficient agents available.
 	 * @return List of randomly chosen agents; returns empty list if too little agents available in candidate list for picking.
 	 */
-	public static List<String> getRandomAgentsFromList(int numberOfTargets, ArrayList<String> inclusionList, boolean allowLessTargets){
+	public static List<String> getRandomAgentsFromList(int numberOfTargets, ArrayList<String> inclusionList, ArrayList<String> exclusionList, boolean allowLessTargets){
 		
 		//list of delivered random number (no double pick)
 		ArrayList<String> deliveredRandoms = new ArrayList<String>();
@@ -747,6 +761,13 @@ public class MTConnector extends MTRuntime {
 				//remove non-registered agent
 				inclusionList.remove(inclusionList.get(i));
 				i--;
+			}
+		}
+		
+		//filter agents that are in exclusionList
+		if(exclusionList != null){
+			for(int i = 0; i < exclusionList.size(); i++){
+				inclusionList.remove(exclusionList.get(i));
 			}
 		}
 		
