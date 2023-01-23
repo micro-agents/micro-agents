@@ -925,7 +925,7 @@ public class MTConnector extends MTRuntime {
 				break;
 			case 3:
 				errorMessage.append("Intent processor for '");
-				errorMessage.append( message.getIntent() );
+				errorMessage.append( message.getIntent().toString() );
 				errorMessage.append("' (requested by ");
 				errorMessage.append(message.getRecipient());
 				errorMessage.append(") could not be found.");
@@ -933,7 +933,7 @@ public class MTConnector extends MTRuntime {
 			case 4:
 				int numberOfNodes = getPropagatedNodes().size();
 				errorMessage.append("Intent processor for '");
-				errorMessage.append( message.getIntent() );
+				errorMessage.append( message.getIntent().toString() );
 				errorMessage.append("' (requested by ");
 				errorMessage.append(message.getRecipient());
 				errorMessage.append(") could not be found locally, now forwarded to ");
@@ -954,7 +954,7 @@ public class MTConnector extends MTRuntime {
 				break;
 			case 7:
 				errorMessage.append("Intent processor for '");
-				errorMessage.append( message.getIntent() );
+				errorMessage.append( message.getIntent().toString() );
 				errorMessage.append("' (requested by ");
 				errorMessage.append(message.getRecipient());
 				errorMessage.append(") could not be found on platform ");
@@ -962,14 +962,14 @@ public class MTConnector extends MTRuntime {
 				break;
 			case 8:
 				errorMessage.append("Intent '");
-				errorMessage.append( message.getIntent() );
+				errorMessage.append( message.getIntent().toString() );
 				errorMessage.append("' (requested by ");
 				errorMessage.append(message.getRecipient());
 				errorMessage.append(") is NOT a valid GenericIntent.");
 				break;
 			case 9:
 				errorMessage.append("GenericIntent '");
-				errorMessage.append( message.getIntent() );
+				errorMessage.append( message.getIntent().toString() );
 				errorMessage.append("' (requested by ");
 				errorMessage.append(message.getRecipient());
 				errorMessage.append(") could not be successfully executed.");
