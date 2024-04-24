@@ -28,7 +28,7 @@ package org.nzdis.micro;
  * @version $Revision: 2.0 $ $Date: 2010/11/14 00:00:00 $
  */
 
-public abstract class DefaultPassiveRole extends AbstractRole implements PassiveRole{
+public abstract class DefaultPassiveRole extends AbstractRole implements PassiveRole {
 
 
 }

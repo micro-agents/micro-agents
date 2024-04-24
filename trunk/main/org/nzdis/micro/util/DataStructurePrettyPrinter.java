@@ -7,9 +7,36 @@ import java.util.Map;
 public class DataStructurePrettyPrinter {
 
 	private static int decompositionLevel = 1;
-	public static int mapDecompositionThreshold = 6;
+	private static int mapDecompositionThreshold = 6;
 	
+	/**
+	 * Sets threshold before decomposing map into line-based entries.
+	 * @param mapDecompositionThreshold
+	 */
+	public static void setMapDecompositionThreshold(int mapDecompositionThreshold) {
+		DataStructurePrettyPrinter.mapDecompositionThreshold = mapDecompositionThreshold;
+	}
+	
+	/**
+	 * Produces human-readable output for Arrays, ArrayLists and Maps. Any other type is simply printed 
+	 * based on its toString() method.
+	 * @param value Object to be printed in decomposed form.
+	 * @param buffer StringBuffer the output is appended to. New buffer is created if value is null.
+	 * @return StringBuffer containing input object's string representation
+	 */
 	public static synchronized StringBuffer decomposeRecursively(Object value, StringBuffer buffer){
+		return decomposeRecursively(value, buffer, mapDecompositionThreshold);
+	}
+	
+	/**
+	 * Produces human-readable output for Arrays, ArrayLists and Maps. Any other type is simply printed 
+	 * based on its toString() method.
+	 * @param value Object to be printed in decomposed form.
+	 * @param buffer StringBuffer the output is appended to. New buffer is created if value is null.
+	 * @param decompositionThreshold Threshold at which map elements are decomposed in individual lines.
+	 * @return StringBuffer containing input object's string representation
+	 */
+	public static synchronized StringBuffer decomposeRecursively(Object value, StringBuffer buffer, int decompositionThreshold){
 		StringBuffer intBuffer = buffer;
 		if(intBuffer == null){
 			intBuffer = new StringBuffer();
@@ -24,7 +51,7 @@ public class DataStructurePrettyPrinter {
 				}
 			}
 			mapSize = ((Map)value).size();
-			if(!containsMap && mapSize < mapDecompositionThreshold){
+			if(!containsMap && mapSize < decompositionThreshold){
 				//if map on highest level (but no embedded map) --> just print
 				if(mapSize > 0){
 					intBuffer.append("(").append(mapSize).append(") ");
@@ -36,7 +63,7 @@ public class DataStructurePrettyPrinter {
 					intBuffer.append(" (").append(mapSize).append(") ");
 				}
 				for(Object key: ((Map)value).keySet()){
-					intBuffer.append("\n").append(calcStringPrefix()).append(" ").append(key);
+					intBuffer.append(System.getProperty("line.separator")).append(calcStringPrefix()).append(" ").append(key);
 					intBuffer.append(": ");
 					decompositionLevel++;
 					intBuffer = decomposeRecursively(((Map)value).get(key), intBuffer);
@@ -45,46 +72,41 @@ public class DataStructurePrettyPrinter {
 			}
 		} else {
 			boolean isArray;
-			try{
+			try {
 				isArray = value.getClass().isArray();
 				//call can cause NPE on primitive type
-			} catch (NullPointerException e){
+			} catch (NullPointerException e) {
 				isArray = false;
 			}
-			if(isArray){
+			if (isArray) {
 				//System.out.println("Value is array: " + value);
 				//if value is array, decompose
 				intBuffer.append("[");
 				boolean allNull = true;
-				//determine if linebreak is to be produced
-				boolean performLinebreak = false;
-				if(Array.getLength(value) >= decompositionLevel){
-					performLinebreak = true;
-				}
-				for(int i=0; i<Array.getLength(value); i++){
-					if(Array.get(value, i) != null){
+				boolean decompose = Array.getLength(value) > decompositionThreshold;
+				for (int i=0; i<Array.getLength(value); i++) {
+					if (Array.get(value, i) != null) {
 						intBuffer = decomposeRecursively(Array.get(value, i), intBuffer);
 						intBuffer.append(", ");
-						if(performLinebreak){
+						if (decompose) {
 							intBuffer.append(System.getProperty("line.separator"));
 						}
 						allNull = false;
 					}
 				}
-				if(!allNull){
+				if (!allNull) {
 					//only remove separators if there are any values in array (i.e. any separators have been added in the first place)
 					int lastIndex = intBuffer.lastIndexOf(", ");
 					intBuffer.delete(lastIndex, lastIndex+2);
 				}
 				intBuffer.append("]");
-			} else if(value != null && value.getClass().equals(ArrayList.class)){
+			} else if(value.getClass().equals(ArrayList.class)){
 				//if is ArrayList, decompose ...
 				ArrayList list = (ArrayList)value;
-				intBuffer.append(System.getProperty("line.separator"));
 				intBuffer.append("List containing ").append(list.size()).append(" elements: ").append(System.getProperty("line.separator"));
 				for(int i = 0; i < list.size(); i++){
 					//and print individual items
-					intBuffer.append(" ").append(list.get(i)).append(System.getProperty("line.separator"));
+					intBuffer.append(list.get(i)).append(System.getProperty("line.separator"));
 				}
 			} else {
 				//System.out.println("Value is NOT array: " + value);
@@ -95,6 +117,11 @@ public class DataStructurePrettyPrinter {
 		return intBuffer;
 	}
 	
+	/**
+	 * Tests whether a given object is a map (or a specialisation of a map).
+	 * @param object
+	 * @return
+	 */
 	public static boolean containsMap(Object object){
 		boolean containsMap = false;
 		Class recursiveClass = null;
@@ -118,7 +145,7 @@ public class DataStructurePrettyPrinter {
 		return containsMap;
 	}
 	
-	static int previousLength = 0;
+	private static int previousLength = 0;
 	
 	private static StringBuffer calcStringPrefix(){
 		StringBuffer buf = new StringBuffer();
@@ -129,7 +156,7 @@ public class DataStructurePrettyPrinter {
 		}
 		if(previousLength != 0 && previousLength > buf.length()){
 			previousLength = buf.length();
-			buf = new StringBuffer("\n").append(buf);
+			buf = new StringBuffer(System.getProperty("line.separator")).append(buf);
 		} else {
 			previousLength = buf.length();
 		}

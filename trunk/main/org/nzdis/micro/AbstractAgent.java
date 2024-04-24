@@ -47,22 +47,22 @@ import org.nzdis.micro.util.SimpleSemaphore;
  */
 public abstract class AbstractAgent extends AbstractCommunicator implements Agent {
 
-	/** reference to the Clojure connector for this agent (if activated) */
+	/** Reference to the Clojure connector for this agent (if activated) */
 	private ClojureConnector cljConn = null;
-	/** indicates whether agent is to be registered for Message Transport */
+	/** Indicates whether agent is to be registered for Message Transport */
 	protected boolean agentMTSupport = false;
-	/** name of Clojure agent script to be run at initialization time */
+	/** Name of Clojure agent script to be run at initialization time */
 	protected String agentScript = "";
-	/** indicates if Clojure is to be supported by this agent (is overridden by global support) */
+	/** Indicates if Clojure is to be supported by this agent (is overridden by global support) */
 	protected boolean agentCljSupport = false;
-	/** indicates if Clojure support has been initialized */
+	/** Indicates if Clojure support has been initialized */
 	protected boolean cljRegistered = false;
-	/** indicates if agent is to be integrated into OPAL hierarchy (and as such registered 
+	/** Indicates if agent is to be integrated into OPAL hierarchy (and as such registered 
 	 * with the agent loaders (for lookup)).
 	 * Default: Agent is registered. */
 	private boolean noOpalHierarchy = false;
 	
-	/** very simple Log for individual agent - helpful for debugging */
+	/** Very simple Log for individual agent - helpful for debugging */
 	private Log log = null;
 	
 	public Log getLog(){
@@ -73,16 +73,16 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 		}
 		return log;
 	}
-	/** switch to de/activate logging */
+	/** Switch to de/activate logging */
 	public boolean logActive = false;
 	
-	/** agent owning this agent */
+	/** Agent owning this agent */
 	protected Agent owner = null;
 	
-	/** indicates if passed agent name is only prefix (unification of name will be done by platform) */
+	/** Indicates if passed agent name is only prefix (unification of name will be done by platform) */
 	private boolean agentNameIsPrefix = false;
 	
-	/** indicates if MicroHierarchy is initialized (only once) */
+	/** Indicates if MicroHierarchy is initialized (only once) */
 	private boolean MicroHierarchyInitialized = false;
 	/** Group reference for agent (when registered in OpalHierarchy) */
 	protected Group group = null;
@@ -132,7 +132,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 		}
 		return roles;
 	}
-	/** separate lists for social and reactive roles to ease reindexing */
+	/** Separate lists for social and reactive roles to ease reindexing */
 	private ArrayList<PassiveRole> reactiveRoles = null; 
 	
 	private ArrayList<PassiveRole> getReactiveRoles(){
@@ -151,7 +151,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 		return socialRoles;
 	}
 	
-	/** separate list for message filters (which are a specialization of social roles 
+	/** Separate list for message filters (which are a specialization of social roles 
 	 *  but not held in that list */
 	private ArrayList<MessageFilter> messageFilterRoles = null; 
 	
@@ -162,7 +162,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 		return messageFilterRoles;
 	}
 	
-	/** list for managing prohibited roles */
+	/** List for managing prohibited roles */
 	private ArrayList<Class> prohibitedRoles = null;
 	
 	private ArrayList<Class> getProhibitedRoles(){
@@ -172,7 +172,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 		return prohibitedRoles;
 	}
 
-	/** indicates if message filter role was added */
+	/** Indicates if message filter role was added */
 	protected boolean messageFilterRolesRegistered = false;
 
 	
@@ -248,7 +248,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * sets up the agent according to constructor-defined configuration.
+	 * Sets up the agent according to constructor-defined configuration.
 	 * Can be called multiple times in case of configuration changes (Messaging 
 	 * and Clojure support activation)
 	 */
@@ -312,7 +312,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * executes all actions necessary when agent switches to activated status
+	 * Executes all actions necessary when agent switches to activated status
 	 */
 	private void setActiveStatus(){
 		this.state = ACTIVE;
@@ -331,7 +331,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	private boolean waitForMessageFilter = false;
 	
 	/**
-	 * indicates if processing of subsequent messages should be blocked
+	 * Indicates if processing of subsequent messages should be blocked
 	 * to allow transactions to complete
 	 * @return boolean - true --> block processing, false --> proceed
 	 */
@@ -340,7 +340,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * when called blocks processing for subsequent messages. Don't forget to 
+	 * Blocks processing for subsequent messages when called. Don't forget to 
 	 * release in order allow messages to be processed
 	 */
 	public void blockMessageProcessing(){
@@ -348,7 +348,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * releases the block status for message processing
+	 * Releases the block status for message processing
 	 */
 	public void allowMessageProcessing(){
 		waitForMessageFilter = false;
@@ -472,14 +472,14 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * returns the Owner of the agent
+	 * Returns the Owner of the agent
 	 */
 	public Agent getOwner(){
 		return this.owner;
 	}
 	
 	/**
-	 * activates Clojure support (in case of configuration change during agent life-time)
+	 * Activates Clojure support (in case of configuration change during agent life-time)
 	 * @param agentScript - Clojure script to be loaded (or "" if none)
 	 */
 	public void activateClojureSupport(String agentScript){
@@ -491,7 +491,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * activates Message Transport support (in case of configuration change during agent life-time)
+	 * Activates Message Transport support (in case of configuration change during agent life-time)
 	 */
 	public void activateMTSupport(){
 		if(!this.MTRegistered){
@@ -501,7 +501,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * configures the subagent handling strategy upon death of agent
+	 * Configures the subagent handling strategy upon death of agent
 	 * true --> kill subagents on death
 	 * false --> reassign subagents to owner agent upon death
 	 * @param strategy (boolean with values above)
@@ -560,7 +560,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 
 	/**
-	 * handles the agent's subhierarchy depending on the strategy chosen
+	 * Handles the agent's subhierarchy depending on the strategy chosen
 	 * (see variable killSubAgentsOnDeath) either by destruction or reallocation
 	 * to next higher agent in hierarchy. 
 	 */
@@ -662,7 +662,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	
 	
 	/**
-	 * prints current log to console
+	 * Prints current log to console
 	 */
 	public void printLog(){
 		getLog().printLog();
@@ -722,7 +722,7 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * adds a role to the agent and registers its role's intents.
+	 * Adds a role to the agent and registers its role's intents.
 	 * If message transport support is not enabled and a social role is
 	 * initialized it will be enabled.
 	 * @param role
@@ -775,14 +775,14 @@ public abstract class AbstractAgent extends AbstractCommunicator implements Agen
 	}
 	
 	/**
-	 * returns all roles the agent currently executes.
+	 * Returns all roles the agent currently executes.
 	 */
 	public Role[] getRoles(){
 		return (Role[])getRolesMap().toArray(new Role[getRolesMap().size()]);
 	}
 	
 	/**
-	 * returns all roles for a given role type the agent executes.
+	 * Returns all roles for a given role type the agent executes.
 	 * @param aRoleType - Role type
 	 */
 	public Role[] getRoles(final Class aRoleType){

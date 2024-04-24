@@ -27,7 +27,7 @@ public class ShowSelectedAgentsOutputInInspectorGuiListener implements PlatformI
 		if(agentName != null){
 			//activate on current agent and save agent name
 			MTConnector.activateSelectivePrintingForAgent(agentName, true);
-			System.out.println("Activated collecting of output for agent " + agentName);
+			System.out.println("Activated output collection for agent " + agentName);
 		}
 		//update agent name in any case (may also be null, i.e. no agent selected)
 		oldAgent = agentName;

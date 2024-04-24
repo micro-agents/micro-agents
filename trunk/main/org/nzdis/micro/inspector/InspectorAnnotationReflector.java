@@ -33,7 +33,6 @@ import java.util.Map.Entry;
 import org.nzdis.micro.Role;
 import org.nzdis.micro.inspector.annotations.CollectiveView;
 import org.nzdis.micro.inspector.annotations.Inspect;
-import org.nzdis.micro.util.DataStructurePrettyPrinter;
 
 /**
  * This class provides the actual inspection services of the PlatformInspector.
@@ -108,6 +107,10 @@ public class InspectorAnnotationReflector {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
+		    	} catch (InvocationTargetException e) {
+		    		System.out.println(e.getClass().getSimpleName() + " when inspecting " + method.getName() + " on object " + object);
+		    		addToMap(map, object, method.getName(), e.getClass().getSimpleName() + ", possibly caused by NullPointerException when invoking method.");
 					e.printStackTrace();
 		    	}
 			}

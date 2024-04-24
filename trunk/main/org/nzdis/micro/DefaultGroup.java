@@ -1,16 +1,16 @@
 /*******************************************************************************
- * µ² - Micro-Agent Platform, core of the Otago Agent Platform (OPAL),
+ * ÂµÂ² - Micro-Agent Platform, core of the Otago Agent Platform (OPAL),
  * developed at the Information Science Department, 
  * University of Otago, Dunedin, New Zealand.
  * 
  * This file is part of the aforementioned software.
  * 
- * µ² is free software: you can redistribute it and/or modify
+ * ÂµÂ² is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * µ² is distributed in the hope that it will be useful,
+ * ÂµÂ² is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -144,7 +144,7 @@ final class DefaultGroup extends AbstractRole implements Group {
   /**
    * Looks up agents by their intent capabilities recursively throughout
    * all sub-groups (Alternative: findAgentsByIntentNonRecursive()).
-   * @param type type of the intent 
+   * @param intentType type of the intent
    * @param includeGroupOwnerInSearch indicates if group owner is to be included in lookup
    * @return array of agents capable of achieving the given intent.
    */
@@ -205,7 +205,7 @@ final class DefaultGroup extends AbstractRole implements Group {
   /**
    * Looks up agent names by their capabilities recursively throughout
    * all sub-groups (Alternative: findAgentNamesByRoleTypeNonRecursive()). 
-   * @param type type of the role
+   * @param roleType type of the role
    * @param includeGroupOwnerInSearch indicates if group owner is to be included in lookup
    * @return array of agent names for a given capability.
    */
@@ -269,7 +269,7 @@ final class DefaultGroup extends AbstractRole implements Group {
   /**
    * Looks up agents by their capabilities recursively throughout
    * all sub-groups (Alternative: findAgentsByRoleTypeNonRecursive()). 
-   * @param type type of the role
+   * @param roleType type of the role
    * @param includeGroupOwnerInSearch indicates if group owner is to be included in lookup
    * @return array of agents for a given capability.
    */
@@ -334,7 +334,7 @@ final class DefaultGroup extends AbstractRole implements Group {
   /**
   * Looks up agents by their capabilities recursively throughout
   * all sub-groups (Alternative: findRolesNonRecursive()). 
-  * @param type type of the role
+  * @param roleType type of the role
   * @param includeGroupOwnerInSearch indicates if group owner is to be included in lookup
   * @return array of roles for a given capability.
   */
@@ -475,11 +475,11 @@ final class DefaultGroup extends AbstractRole implements Group {
    * @param agent Agent the role to be registered for
    * @param role role instance to be registered
    */
-  public synchronized void registerRoleForAgent(final Agent agent, Role r){
+  public synchronized void registerRoleForAgent(final Agent agent, Role role){
 	  semaphore.acquire();
 	  boolean roleNotExisting = true;
 	  for(int l = 0; l < getRolesList().size(); l++){
-		  if(roles.get(l).equals(r)){
+		  if(roles.get(l).equals(role)){
 			  roleNotExisting = false;
 		  }
 	  }
@@ -489,8 +489,8 @@ final class DefaultGroup extends AbstractRole implements Group {
 		  boolean valid = false;
 		  for(int u = 0; u < getAgentsList().size(); u++){
 			  if(agents.get(u).equals(agent)){
-				  roles.add(r);
-				  Class[] gs = r.getApplicableIntentTypes();
+				  roles.add(role);
+				  Class[] gs = role.getApplicableIntentTypes();
 			      for (int j = 0; j < gs.length; j++) {
 			        addIntent(gs[j], agent);
 			        addApplicableIntent(gs[j]);

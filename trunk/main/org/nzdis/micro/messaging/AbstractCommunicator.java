@@ -273,7 +273,7 @@ public abstract class AbstractCommunicator extends AgentStates implements Messag
 	 * Sends Fuzzycast to the specified <quota> of agents which are chosen randomly.
 	 * If global is set to true, random choice includes all connected remote nodes.
 	 * @param message
-	 * @param numberOfTargets
+	 * @param quota
 	 * @param global
 	 * @param trueIndicatesListofCandidatesFalseIndicatesExcludedAgents Specifies if list is exclusive or excluding (true: exclusive) for random targets
 	 * @param inOrExclusionList ArrayList of agents (agent names) to be in/excluded from Fuzzycast. If null, all platform-registered agents can be potentially selected.
@@ -295,7 +295,7 @@ public abstract class AbstractCommunicator extends AgentStates implements Messag
 	 * Sends Fuzzycast to the specified <quota> of agents which are chosen randomly.
 	 * If global is set to true, random choice includes all connected remote nodes.
 	 * @param message
-	 * @param numberOfTargets
+	 * @param quota
 	 * @param global
 	 * @param trueIndicatesListofCandidatesFalseIndicatesExcludedAgents Specifies if list is exclusive or excluding (true: exclusive) for random targets
 	 * @param inOrExclusionList ArrayList of agents (agent names) to be in/excluded from Fuzzycast. If null, all platform-registered agents can be potentially selected.

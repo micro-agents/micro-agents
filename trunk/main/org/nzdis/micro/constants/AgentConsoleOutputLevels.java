@@ -15,6 +15,7 @@ public class AgentConsoleOutputLevels {
 			case 2:
 				return "ALL";
 		}
+		System.err.println("Unknown output level");
 		return null;
 	}
 	
